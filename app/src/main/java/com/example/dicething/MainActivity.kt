@@ -41,6 +41,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -49,6 +50,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -110,7 +113,7 @@ class MainActivity : ComponentActivity() {
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Title_text()
-                                Spacer(modifier = Modifier.height(150.dp))
+                                Spacer(modifier = Modifier.height(120.dp))
                                 Dice_Rotation()
 
                             }
@@ -140,7 +143,7 @@ fun Starting_text() {
         exit = slideOutVertically(
             animationSpec = spring(
                 stiffness = Spring.StiffnessLow,
-                dampingRatio = Spring.DampingRatioLowBouncy
+                dampingRatio = Spring.DampingRatioMediumBouncy
             ),
             targetOffsetY = { -1208 }),
         modifier = Modifier
@@ -159,19 +162,9 @@ fun Starting_text() {
                 modifier = Modifier
                     .padding(20.dp)
                     .clickable { state = !state }
-                    .fillMaxWidth(0.4f)
-                    .background(
-                        Color(0xFFDD5675),
-                        shape = RoundedCornerShape(corner = CornerSize(20.dp))
-                    )
-                    .border(
-                        border = BorderStroke(
-                            width = 4.dp,
-                            color = Color.Black
-                        ),
-                        shape = RoundedCornerShape(corner = CornerSize(20.dp))
-                    )
-                    .padding(10.dp),
+                    .clip(shape = RoundedCornerShape(100))
+                    .background(Color(0xff75bdd1))
+                    .padding(20.dp, 5.dp),
                 textAlign = TextAlign.Center
             )
 
@@ -247,16 +240,23 @@ fun Dice_Rotation() {
         ) {
             Text(stringResource(R.string.roll))
         }
+
         Text(
-            text = "Value: $randomvalue",
-            modifier = Modifier.padding(20.dp),
-            style = TextStyle(color = Color.Black)
+            text = "$randomvalue",
+            modifier = Modifier.padding(20.dp)
+                .wrapContentWidth()
+                .clip(shape = RoundedCornerShape(100))
+                .background(Color(0xff75bdd1))
+                .padding(20.dp, 5.dp)
+            ,
+            style = TextStyle(color = Color.Black, fontSize = 22.sp)
         )
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
-
+            val sets: Any
             TextField(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 value = mintext,
@@ -277,7 +277,13 @@ fun Dice_Rotation() {
                         )
                     }
                 },
+                shape = RoundedCornerShape(20.dp),
                 modifier = Modifier.width(120.dp),
+                colors = TextFieldDefaults.colors(
+                    errorIndicatorColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                )
             )
             TextField(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -297,7 +303,13 @@ fun Dice_Rotation() {
                         )
                     }
                 },
+                shape = RoundedCornerShape(20.dp),
                 modifier = Modifier.width(120.dp),
+                colors = TextFieldDefaults.colors(
+                    errorIndicatorColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                )
             )
         }
     }
